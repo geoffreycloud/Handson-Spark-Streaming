@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, avg, sum
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType
+from pyspark.sql.types import StructType, StructField, StringType, DoubleType
 
 # Create a Spark session
 spark = SparkSession.builder.appName("RideSharingAnalytics").getOrCreate()

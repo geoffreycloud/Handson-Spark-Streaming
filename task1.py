@@ -27,10 +27,20 @@ parsed_df = raw_df.select(
 ).select("ride.*")
 
 # Print parsed data to the CSV files
+def write_batch(batch_df, batch_id):
+
+    print(f"\n===== Batch {batch_id} =====")
+    batch_df.show(truncate=False)
+
+    # Save the batch DataFrame as a CSV file with the batch ID in the filename
+    batch_df.coalesce(1).write \
+        .mode("append") \
+        .option("header", True) \
+        .csv("outputs/task_1")
+
 query = parsed_df.writeStream \
     .outputMode("append") \
-    .format("console") \
-    .option("truncate", False) \
+    .foreachBatch(write_batch) \
     .start()
 
 query.awaitTermination()
